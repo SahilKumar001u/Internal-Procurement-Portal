@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'requisitions.middleware.NoCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'procurement_system.urls'

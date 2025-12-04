@@ -1,10 +1,38 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.forms import formset_factory
 from .models import Requisition, LineItem, ApprovalLog, UserProfile
 from .forms import LineItemForm, ApprovalForm, SignUpForm
+
+
+def custom_login(request):
+    """Redirect to dashboard if already logged in"""
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    
+    from django.contrib.auth.forms import AuthenticationForm
+    from django.contrib.auth import authenticate, login
+    
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, f'Welcome back, {user.username}!')
+            return redirect('dashboard')
+    else:
+        form = AuthenticationForm()
+    
+    return render(request, 'requisitions/login.html', {'form': form})
+
+
+def custom_logout(request):
+    """Logout and redirect to login page"""
+    logout(request)
+    messages.info(request, 'You have been logged out.')
+    return redirect('login')
 
 
 def signup(request):
