@@ -25,11 +25,17 @@ SECRET_KEY = 'django-insecure-a1^uufcydt#yob-$=k@bb56*$fct$s5kj56pr3on%80=g9+rwg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '.onrender.com']
+ALLOWED_HOSTS = ['*', '.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.onrender.com',
+    'https://*.railway.app',
 ]
+
+# Session settings for HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
 
 
 # Application definition
